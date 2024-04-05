@@ -10,8 +10,9 @@
 # [x] 7 find corresponding records in csv created in 2
 # [x] 8 update the csv from 3 with account names only for records identified in 7
 # [x] 9 print csv
+# [ ] 10 balance!
 
-# 9 error checking
+# 10 error checking
 
 import subprocess
 import csv
