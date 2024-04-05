@@ -1,0 +1,271 @@
+# rules for all categories (or sub-accounts, in hledger lingo)
+
+if
+%description 135-17256-1
+  account2 expenses:rent
+
+if 
+%description DISTRICT 1O BAR & GRILL 
+%description PATISSERIE G
+%description BEIGELHAUS
+%description LA MENSA
+%description PEPPER CASTLE
+%description COCOICHIBANYA
+%description COCOA TREES
+%description COFFEE CLUB
+%description ATLAS-COFFEEHOUSE
+%description Gold Ocean
+%description POPEYES
+%description DARIO PIZZA
+%description CHOCOLATE ORIGIN
+%description EGGSLUT
+%description CUISINE OF CM
+%description LIHO
+%description OMNIVORE
+%description Miznon
+%description ANJAPPAR
+%description MEXICAN FOOD CORP
+%description Foodpanda
+%description Food panda
+%description KOI THE
+%description JAGGI
+%description BAKALAKI
+%description Copper Chimney
+%description SOPHO
+%description OLLA
+%description SHAKE SHACK
+%description OLD CHANG KEE
+%description STUFF'D
+%description POLAR PUFFS
+%description URBAN ROTI
+%description HOHO KOREAN
+%description NUTRITION KITCHEN
+%description FITTHREE
+%description KOPITIAM
+%description Nandos
+%description DELIVEROO
+%description MCDONALD
+%description HUGGS
+%description YA KUN KAYA
+%description SUBWAY
+%description SUBWWAY
+%description Carrotsticks
+%description NANDO'S
+%description CARL'S JR
+%description WOK HEY
+%description Park Bench
+%description TIPO-PASTA-BAR
+%description AJISEN
+%description WILD HONEY
+%description YA KUN
+%description STARBUCKS
+%description TIONG BAHRU BAKERY
+%description BANANA LEAF
+%description PRIVE
+%description MONSTER CURRY
+%description DIN TAI FUNG
+%description DAILY CUT
+%description BURNT CONES
+%description GUZMAN Y GOMEZ
+%description SO PHO
+%description Hanbaobao
+%description BAKER'S BENCH
+%description ELEPHANT ROOM
+%description MURUGAN IDLI
+%description MARGARITA'S
+%description ACAI AFFAIR
+%description LIHO TEA
+%description FRUITS VENDING
+%description CEDELE BAKERY
+%description ACAI BROS
+%description PODI & PORIYAL
+%description TangraChinese
+%description SRI MURUGAN
+%description JAMES' QUESADILLA
+%description OVER EASY
+%description OVEREASY
+%description KANE MOCHI JEWEL
+%description PRATA CAFE
+%description SUNTEC-SING HK CAFE
+%description KAILASH PARBAT
+%description COFFEE ACADEMICS
+%description RAZ\*Swiggy
+%description Swiggy Foods
+%description BUNDLTECHNOLOGIES
+  account2 expenses:dine_out
+
+if
+%description SM INTERNATIONAL
+  account2 expenses:dine_out
+  description Ho Ho Korean %description
+
+if 
+%description SCOOP WHOLEFOODS
+%description COLD STORAGE
+%description SEOUL MART
+%description AMMAN VEG
+%description HOOK
+%description FAIRPRICE
+%description NTUC FP
+%description RedMart
+%description FINEST
+%description LEMUEL CHOCOLATE
+%description AMZNPRIMESG MEMBERSHIP
+%description PERK COFFEE
+%description FREDO
+%description ALCHEMIST 
+%description HYPER VIVO
+%description Grindelwald
+%description RedManShop
+%description CHEERS
+%description Swiggy Instamart
+%description Blue Tokai Coffee
+  account2 expenses:groceries
+
+if
+%description MYREPUBLIC
+%description SINGTEL
+%description GOMO
+%description CIRCLES.LIFE
+%description SP DIGITAL
+%description GIGA
+  account2 expenses:utilities
+
+if
+%description NETFLIX
+%description Disney Plus
+%description YOUTUBE
+%description OBSIDIAN
+%description OBSIDIAN.MD
+%description READWISE
+%description DAYLIO
+%description NEW YORK TIMES
+%description NYTIMES
+%description BLINKIST
+%description MEDIUM
+%description RAYCAST
+%description SHORTFORM
+%description FLO HEALTH
+%description APPLE.\*ITUNES
+%description APPLE.COM/BILL
+%description Patreon
+%description Google Storage
+%description 1PASSWORD
+%description JUGGERNAUT
+ account2 expenses:app_subscription
+
+if
+%description PLAYSTATION
+%description STEAMGAMES
+%description SHAW THEATRES
+%description WECINEMAS
+%description GV ONLINE
+%description GV TIONG BAHRU
+%description STEAM PURCHASE
+%description SISTIC
+%description MANDAI
+%description DUCKTOURS
+  account2 expenses:entertainment
+
+if
+%description BLACKWELL'S
+  account2 expenses:books
+
+if
+%description Grab|GRAB
+%description GOJEK
+%description TADA
+%description EZL AUTO TOPUP
+%description BUS/MRT
+%description TRANSIT
+%description Cabcharge Asia
+%description EZ-LINK
+%description GetGo
+%description UBER
+  account2 expenses:transport
+
+if
+%description FITNESS FIRST
+%description CLIMB CENTRAL
+  account2 expenses:fitness
+
+if
+%description CHALLENGER
+%description LA BARBERSHOP
+%description SGPOMADES
+%description SEPHORA
+%description ADIDAS
+%description AC LAUNDRY
+%description 7-ELEVEN
+%description ETSY
+%description GOOGLE \*DOMAINS
+  account2 expenses:personal
+
+if
+%description UNIQLO
+%description LULULEMON
+%description SKECHERS
+%description COTTON ON
+%description DECATHLON
+%description TIRUMALA DESIGNERS PRI
+%description JAMES BARKER
+%description LEVI STRAUSS
+  account2 expenses:apparel
+
+if
+%description Prudential
+  account2 expenses:insurance
+
+if
+%description SCOOT
+%description VISTARA
+%description AIRASIA
+%description JETSTAR
+%description SINGAPOREAIR
+%description Singapore Airlines
+%description Miles Transfer Fee
+%description RAZ\*IndiGo
+  account2 expenses:travel:flight
+
+if
+%description AIRALO
+  account2 expenses:travel:misc
+
+if
+%description TRIP.COM
+  account2 expenses:travel
+
+if
+%description AIRBNB
+%description agoda.com
+    account2 expenses:travel:hotel
+
+if
+%description WATSON'S
+%description KINGSWAY MEDICAL
+%description LAPAROSCOPY
+%description STO\+G CLINIC FOR WOMEN
+%description CASA DENTAL
+  account2 expenses:medical
+
+if
+%description LAZADA
+%description IKEA
+%description SELFFIX
+%description JOURNEY EAST
+  account2 expenses:household
+
+if
+%description T-Bill
+  account2 assets:investment:tbill
+
+if
+Nikko AM
+U6040596
+DEPNEW35d498b
+  account2 assets:investment:shares
+
+if
+%description CASHBACK
+%description Cashback
+  account2 income:cashback

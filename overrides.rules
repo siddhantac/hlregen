@@ -1,0 +1,11 @@
+# these rules should be imported last so that they can override everything else
+
+# if desc2 column is populated then it should take precedence over any other rule
+if %account [a-z\:]
+  account2 %account
+
+if %comment [a-z\:]
+  comment %comment
+
+if %balance [a-z\:]
+  balance %balance

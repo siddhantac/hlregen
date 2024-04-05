@@ -1,0 +1,64 @@
+# hledger csv conversion rules for ocbc.csv
+# cf http://hledger.org/manual#csv-files
+
+include categories.rules
+skip 1
+fields ,date, description,amount-in,amount-out,account,comment,code
+date-format %Y-%m-%d
+currency SGD$
+decimal-mark .
+
+description %description %description2
+
+# skip if date is empty
+if %date ^$
+  skip
+
+if
+%description SALARY
+  account2 income:salary:sid
+
+if
+%description INTEREST
+  account2 income:interest
+
+if
+%description UNIT TRUST
+  account2 assets:investment:unit_trust
+
+if
+%description BCIP
+  account2 assets:investment:ocbc_bluechip
+
+if
+BCIP CR.*DIVD
+  account2 income:investment:ocbc_bluechip
+
+if
+ITX IRAS
+  account2 expenses:tax
+
+if
+%description 0022083044
+  account2 assets:transfers
+
+if 
+BILL PAYMENT
+Credit Card Payment to Citi CC
+  account2 assets:credit_card_payment
+
+if TRANSFER
+  account2 assets:transfers
+
+if
+SGS DIS/PRE REFUND
+  description T-Bill Income %description
+  account2 income:investment:tbill
+
+if
+SGS APPLICATION
+  account2 assets:investment:tbill
+
+account1 assets:bank:ocbc_sid
+
+include overrides.rules
