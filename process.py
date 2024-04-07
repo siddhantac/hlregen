@@ -95,14 +95,25 @@ for ut in unknown_txns:
         filtered_txns[idx].keep_account = True
         print("unknowns found:", filtered_txns[idx])
 
+# balance
+balance_cmd = ["hledger", "balance", account, "-p", date, "-H", "-O", "csv"]
+balance_csv = subprocess.run(balance_cmd, capture_output=True, text=True)
+balance_lines = balance_csv.stdout.split('\n')
+balance_str = balance_lines[1].split(",")[1]
+balance = balance_str.replace("SGD$", "")
 
 with open(filename,'w', newline='') as f:
     f.write(header+"\n")
-    for t in filtered_txns:
+    for idx, t in enumerate(filtered_txns):
         if not t.keep_account:
-            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},,{t.comment},{t.code}\n")
+            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},,{t.comment},{t.code}")
         else:
-            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},{t.account},{t.comment},{t.code}\n")
+            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
+
+        if idx == len(filtered_txns) - 1:
+            f.write(f",{balance}")
+
+        f.write("\n")
 
 # error checking
 
@@ -120,4 +131,3 @@ for idx, t in enumerate(original_txns):
         print(t) 
         print(new_txns[idx])
         sys.exit(1)
-
