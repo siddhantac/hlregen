@@ -117,17 +117,26 @@ with open(filename,'w', newline='') as f:
 
 # error checking
 
-_, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
-_, new_txns = txns_from_csv(["hledger", "print", "-f", filename, "--rules-file", "ocbc.rules", "-O", "csv"])
+new_journal_cmd = subprocess.run(["hledger", "print", "-f", filename, "--rules-file", "ocbc.rules"], capture_output=True, text=True)
+new_journal = new_journal_cmd.stdout
 
-if len(original_txns) != len(new_txns):
-    print("unequal no. of txns")
-    print(len(original_txns), len(new_txns))
-    sys.exit(1)
-
-for idx, t in enumerate(original_txns):
-    if t != new_txns[idx]:
-        print("unequal txns", idx)
-        print(t) 
-        print(new_txns[idx])
+with open("../../accounts/journals/202305_ocbc_sid.journal", "r") as f:
+    original_journal = f.read()
+    if new_journal != original_journal:
+        print("journal not equal")
         sys.exit(1)
+
+# _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
+# _, new_txns = txns_from_csv(["hledger", "print", "-f", filename, "--rules-file", "ocbc.rules", "-O", "csv"])
+#
+# if len(original_txns) != len(new_txns):
+#     print("unequal no. of txns")
+#     print(len(original_txns), len(new_txns))
+#     sys.exit(1)
+#
+# for idx, t in enumerate(original_txns):
+#     if t != new_txns[idx]:
+#         print("unequal txns", idx)
+#         print(t) 
+#         print(new_txns[idx])
+#         sys.exit(1)
