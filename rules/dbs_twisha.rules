@@ -2,9 +2,9 @@
 # cf http://hledger.org/manual#csv-files
 
 include categories.rules
-skip 6
-fields date,,code1,code2, amount-out, amount-in,description,description2,description3,account,comment,balance
-date-format %-d %b %Y
+skip 1
+fields ,date, description,amount-in,amount-out,account,comment,code,balance
+date-format %Y-%m-%d
 currency SGD$
 decimal-mark .
 
