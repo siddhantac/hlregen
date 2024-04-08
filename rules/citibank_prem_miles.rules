@@ -1,0 +1,16 @@
+# hledger csv conversion rules for trunc_finance.csv
+# cf http://hledger.org/manual#csv-files
+
+include categories.rules
+fields date, description, amount-in, amount-out, ,account,comment,description2
+date-format %-d/%-m/%Y
+currency SGD$
+decimal-mark .
+
+if FAST INCOMING PAYMENT
+  account2 assets:credit_card_payment
+
+amount %amount
+account1 liabilities:credit_card:citibank_prem_miles
+description %description2 %description
+include overrides.rules

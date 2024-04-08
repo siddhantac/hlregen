@@ -31,6 +31,13 @@ if args.account is None or args.date is None:
 account = args.account
 date = args.date
 
+account_name = account.split(":")[2]
+base_filename = date.replace("/", "") + "_" + account_name
+journal_filename = date.replace("/", "") + "_" + account_name + ".journal"
+csvfile_dirname = 'csvfiles/'
+csvfile = base_filename + '.csv'
+rules_file = os.path.join("rules", account_name + ".rules")
+
 class Transaction:
     def __init__(self, cols):
         self.txn_id = cols[0]
@@ -73,11 +80,9 @@ header, all_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O"
 filtered_txns = [t for t in all_txns if account not in t.account]
 
 # 3 re-create csv without accounts
-dirname = 'csvfiles/'
-csvfile = '202305_ocbc_sid.csv'
-filename = os.path.join(dirname, csvfile) 
-tmp_filename = os.path.join(dirname,'tmp_' + csvfile)
-with open(tmp_filename,'w', newline='') as f:
+csv_filename = os.path.join(csvfile_dirname, csvfile) 
+tmp_csv_filename = os.path.join('tmp_' +csvfile_dirname, csvfile)
+with open(tmp_csv_filename,'w', newline='') as f:
     f.write("txn_id,date,description,credit,debit,account,comment,code\n")
     for txn in filtered_txns:
         f.write(f"{txn.txn_id},{txn.date},{txn.description},{txn.credit},{txn.debit},,{txn.comment},{txn.code}\n")
@@ -85,7 +90,7 @@ with open(tmp_filename,'w', newline='') as f:
 
 # [ ] 4 import csv with hledger and create new csv
 # [ ] 5 parse csv
-_, txns = txns_from_csv(["hledger", "print", "-f", tmp_filename, "--rules-file", "rules/ocbc.rules", "-O", "csv"])
+_, txns = txns_from_csv(["hledger", "print", "-f", tmp_csv_filename, "--rules-file", rules_file, "-O", "csv"])
 
 # [ ] 6 filter out unknown txns
 unknown_txns = [t for t in txns if "unknown" in t.account]
@@ -114,7 +119,7 @@ balance_lines = balance_csv.stdout.split('\n')
 balance_str = balance_lines[1].split(",")[1]
 balance = balance_str.replace("SGD$", "")
 
-with open(filename,'w', newline='') as f:
+with open(csv_filename,'w', newline='') as f:
     f.write(header+"\n")
     for idx, t in enumerate(filtered_txns):
         if not t.keep_account:
@@ -129,17 +134,19 @@ with open(filename,'w', newline='') as f:
 
 # error checking
 
-new_journal_cmd = subprocess.run(["hledger", "print", "-f", filename, "--rules-file", "rules/ocbc.rules"], capture_output=True, text=True)
+new_journal_cmd = subprocess.run(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file], capture_output=True, text=True)
 new_journal = new_journal_cmd.stdout
 
-
-account_name = account.split(":")[2]
-journal_filename = date.replace("/", "") + "_" + account_name + ".journal"
 journal_filepath = os.path.join("../../accounts/journals", journal_filename)
 with open(journal_filepath, "r") as f:
     original_journal = f.read()
     if new_journal != original_journal:
         print("journal not equal")
+
+        new_journal_file = os.path.join("journals", journal_filename)
+        with open(new_journal_file, "w") as f2:
+            f2.write(new_journal)
+            print("wrote new journal to: ", new_journal_file)
         sys.exit(1)
 
 # _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])

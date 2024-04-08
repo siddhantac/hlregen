@@ -1,0 +1,69 @@
+# hledger csv conversion rules for ocbc.csv
+# cf http://hledger.org/manual#csv-files
+
+include categories.rules
+skip 6
+fields date,,code1,code2, amount-out, amount-in,description,description2,description3,account,comment,balance
+date-format %-d %b %Y
+currency SGD$
+decimal-mark .
+
+# skip if date is empty
+if %date ^$
+  skip
+
+if
+%description INTEREST
+  account2 income:Interest
+
+if
+%code2 INT
+%code1 INT
+  account2 income:interest
+
+if
+%description SUGARROLL
+%description HEADQUARTERS XYZ
+  account2 income:salary:twisha
+
+if
+%code2 AWL
+%code2 ATM
+%code1 AWL
+%code1 ATM
+  description ATM Withdrawal
+  account2 expenses:petty_cash
+
+if
+%description2 Saxo
+  account2 assets:investment:saxo
+
+if
+%description2 Entertainment
+%description3 Entertainment
+  account2 expenses:entertainment
+
+if
+%code1 SGR
+%code2 SGR
+  description Income from T-Bill %description
+  account2 income:investment:tbill
+
+if
+%description UTCA-Franklin Technology Fund
+  account2 assets:investment:unit_trust
+
+if
+%description2 DIVIDEND PAYOUT
+  account2 income:investment:unit_trust
+
+if
+%code1 CDP
+%code2 CDP
+  account2 assets:investment:tbill
+
+account1 assets:bank:dbs_twisha
+description %description %description2 %description3
+code %code1 %code2
+
+include overrides.rules

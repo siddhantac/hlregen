@@ -1,0 +1,62 @@
+# hledger csv conversion rules for ocbc.csv
+# cf http://hledger.org/manual#csv-files
+
+include categories.rules
+skip 1
+fields ,date, description,amount-in,amount-out,account,comment,code,balance
+date-format %Y-%m-%d
+currency SGD$
+decimal-mark .
+
+# skip if date is empty
+if %date ^$
+  skip
+
+if
+%description INTEREST
+  account2 income:interest
+
+if
+%code AWL
+  description ATM Withdrawal
+  account2 expenses:petty_cash
+
+if
+%code INT
+  description Interest
+  account2 income:interest
+
+if
+%description T-Bill
+%code CDP
+  account2 assets:investment:tbill
+
+if
+%code SGR
+  description Income from T-Bill %description
+  account2 income:investment:tbill
+
+if
+SIOT
+  account2 expenses:household:india
+
+if
+OCBCSGSGBRT
+  account2 assets:transfers
+
+if
+From: GOOGLE PAYMENT SINGAPORE
+  account2 income:cashback
+
+if
+%code FDP
+  account2 assets:investment:fixed_deposit
+
+if
+%code FDI
+  account2 income:investment:fixed_deposit
+
+account1 assets:bank:dbs_sid
+description %description %description2 %description3
+
+include overrides.rules

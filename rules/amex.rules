@@ -1,0 +1,21 @@
+# hledger csv conversion rules for trunc_finance.csv
+# cf http://hledger.org/manual#csv-files
+
+include categories.rules
+skip 1
+fields date, description, _, _, amount, account,comment,description2
+date-format %-m/%-d/%Y
+currency SGD$
+decimal-mark .
+
+if
+ANNUAL FEE
+  account2 expenses:credit_card_fee
+
+if PAYMENT BY
+  account2 assets:credit_card_payment
+
+amount -%amount
+account1 liabilities:credit_card:amex
+description %description2 %description
+include overrides.rules
