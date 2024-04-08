@@ -15,7 +15,7 @@
 # 10 error checking
 
 import subprocess
-import csv
+import os
 import sys
 
 account="assets:bank:ocbc_sid"
@@ -63,8 +63,10 @@ header, all_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O"
 filtered_txns = [t for t in all_txns if account not in t.account]
 
 # 3 re-create csv without accounts
-filename = '202305_ocbc_sid.csv' 
-tmp_filename = 'tmp_' + filename
+dirname = 'csvfiles/'
+csvfile = '202305_ocbc_sid.csv'
+filename = os.path.join(dirname, csvfile) 
+tmp_filename = os.path.join(dirname,'tmp_' + csvfile)
 with open(tmp_filename,'w', newline='') as f:
     f.write("txn_id,date,description,credit,debit,account,comment,code\n")
     for txn in filtered_txns:
@@ -73,7 +75,7 @@ with open(tmp_filename,'w', newline='') as f:
 
 # [ ] 4 import csv with hledger and create new csv
 # [ ] 5 parse csv
-_, txns = txns_from_csv(["hledger", "print", "-f", tmp_filename, "--rules-file", "ocbc.rules", "-O", "csv"])
+_, txns = txns_from_csv(["hledger", "print", "-f", tmp_filename, "--rules-file", "rules/ocbc.rules", "-O", "csv"])
 
 # [ ] 6 filter out unknown txns
 unknown_txns = [t for t in txns if "unknown" in t.account]
@@ -117,7 +119,7 @@ with open(filename,'w', newline='') as f:
 
 # error checking
 
-new_journal_cmd = subprocess.run(["hledger", "print", "-f", filename, "--rules-file", "ocbc.rules"], capture_output=True, text=True)
+new_journal_cmd = subprocess.run(["hledger", "print", "-f", filename, "--rules-file", "rules/ocbc.rules"], capture_output=True, text=True)
 new_journal = new_journal_cmd.stdout
 
 with open("../../accounts/journals/202305_ocbc_sid.journal", "r") as f:
