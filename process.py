@@ -132,7 +132,11 @@ with open(filename,'w', newline='') as f:
 new_journal_cmd = subprocess.run(["hledger", "print", "-f", filename, "--rules-file", "rules/ocbc.rules"], capture_output=True, text=True)
 new_journal = new_journal_cmd.stdout
 
-with open("../../accounts/journals/202305_ocbc_sid.journal", "r") as f:
+
+account_name = account.split(":")[2]
+journal_filename = date.replace("/", "") + "_" + account_name + ".journal"
+journal_filepath = os.path.join("../../accounts/journals", journal_filename)
+with open(journal_filepath, "r") as f:
     original_journal = f.read()
     if new_journal != original_journal:
         print("journal not equal")
