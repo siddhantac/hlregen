@@ -36,6 +36,7 @@ base_filename = date.replace("/", "") + "_" + account_name
 journal_filename = date.replace("/", "") + "_" + account_name + ".journal"
 csvfile_dirname = 'csvfiles/'
 csvfile = base_filename + '.csv'
+csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
 
 class Transaction:
@@ -80,7 +81,6 @@ header, all_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O"
 filtered_txns = [t for t in all_txns if account not in t.account]
 
 # 3 re-create csv without accounts
-csv_filename = os.path.join(csvfile_dirname, csvfile) 
 tmp_csv_filename = os.path.join('tmp_' +csvfile_dirname, csvfile)
 with open(tmp_csv_filename,'w', newline='') as f:
     f.write("txn_id,date,description,credit,debit,account,comment,code\n")
@@ -147,19 +147,17 @@ with open(journal_filepath, "r") as f:
         with open(new_journal_file, "w") as f2:
             f2.write(new_journal)
             print("wrote new journal to: ", new_journal_file)
-        sys.exit(1)
 
-# _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
-# _, new_txns = txns_from_csv(["hledger", "print", "-f", filename, "--rules-file", "ocbc.rules", "-O", "csv"])
-#
-# if len(original_txns) != len(new_txns):
-#     print("unequal no. of txns")
-#     print(len(original_txns), len(new_txns))
-#     sys.exit(1)
-#
-# for idx, t in enumerate(original_txns):
-#     if t != new_txns[idx]:
-#         print("unequal txns", idx)
-#         print(t) 
-#         print(new_txns[idx])
-#         sys.exit(1)
+_, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
+_, new_txns = txns_from_csv(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file, "-O", "csv"])
+
+if len(original_txns) != len(new_txns):
+    print("unequal no. of txns")
+    print(len(original_txns), len(new_txns))
+    sys.exit(1)
+
+for idx, t in enumerate(original_txns):
+    if t != new_txns[idx]:
+        print("unequal txns: ", idx)
+        print(t) 
+        print(new_txns[idx])
