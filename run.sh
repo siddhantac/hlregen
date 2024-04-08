@@ -11,6 +11,6 @@ do
 
     echo ""
     echo "---"
-    ./process.py --account "assets:bank:ocbc_sid" --date "$date"
+    ./process.py --account "assets:bank:dbs_sid" --date "$date"
     gum confirm "Continue?" && CONTINUE=1 || CONTINUE=0
 done
