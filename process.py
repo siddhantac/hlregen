@@ -17,9 +17,19 @@
 import subprocess
 import os
 import sys
+import argparse
 
-account="assets:bank:ocbc_sid"
-date="2023/05"
+parser = argparse.ArgumentParser(description='process journals')
+parser.add_argument('--date', '-d', type=str, help='date')
+parser.add_argument('--account', '-a', help='account', type=str)
+args = parser.parse_args()
+
+if args.account is None or args.date is None:
+    print(parser.print_help())
+    sys.exit(1)
+
+account = args.account
+date = args.date
 
 class Transaction:
     def __init__(self, cols):
