@@ -39,6 +39,8 @@ csvfile = base_filename + '.csv'
 csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
 
+print("Processing: ", journal_filename)
+
 class Transaction:
     def __init__(self, cols):
         self.txn_id = cols[0]
@@ -141,23 +143,26 @@ journal_filepath = os.path.join("../../accounts/journals", journal_filename)
 with open(journal_filepath, "r") as f:
     original_journal = f.read()
     if new_journal != original_journal:
-        print("journal not equal")
+        print("\njournal not equal")
 
         new_journal_file = os.path.join("journals", journal_filename)
         with open(new_journal_file, "w") as f2:
             f2.write(new_journal)
             print("wrote new journal to: ", new_journal_file)
+            print("vimdiff ", journal_filepath, new_journal_file)
 
 _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
 _, new_txns = txns_from_csv(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file, "-O", "csv"])
 
 if len(original_txns) != len(new_txns):
-    print("unequal no. of txns")
+    print("\nunequal no. of txns")
     print(len(original_txns), len(new_txns))
     sys.exit(1)
 
 for idx, t in enumerate(original_txns):
     if t != new_txns[idx]:
-        print("unequal txns: ", idx)
-        print(t) 
-        print(new_txns[idx])
+        print("\nunequal txn idx: ", idx)
+        print("original:", t)
+        print("new: ", new_txns[idx])
+
+print("completed")
