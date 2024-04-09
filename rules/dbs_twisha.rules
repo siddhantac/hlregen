@@ -13,12 +13,9 @@ if %date ^$
   skip
 
 if
-%description INTEREST
-  account2 income:Interest
-
-if
 %code2 INT
 %code1 INT
+%description INTEREST
   account2 income:interest
 
 if
