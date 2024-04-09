@@ -115,11 +115,16 @@ for ut in unknown_txns:
         print("unknowns found:", filtered_txns[idx])
 
 # balance
-balance_cmd = ["hledger", "balance", account, "-p", date, "-H", "-O", "csv"]
-balance_csv = subprocess.run(balance_cmd, capture_output=True, text=True)
-balance_lines = balance_csv.stdout.split('\n')
-balance_str = balance_lines[1].split(",")[1]
-balance = balance_str.replace("SGD$", "")
+is_credit_card = False
+if "liabilities" in account:
+    is_credit_card = True
+
+if not is_credit_card:
+    balance_cmd = ["hledger", "balance", account, "-p", date, "-H", "-O", "csv"]
+    balance_csv = subprocess.run(balance_cmd, capture_output=True, text=True)
+    balance_lines = balance_csv.stdout.split('\n')
+    balance_str = balance_lines[1].split(",")[1]
+    balance = balance_str.replace("SGD$", "")
 
 with open(csv_filename,'w', newline='') as f:
     f.write(header+"\n")
@@ -129,7 +134,7 @@ with open(csv_filename,'w', newline='') as f:
         else:
             f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
 
-        if idx == len(filtered_txns) - 1:
+        if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
 
         f.write("\n")
