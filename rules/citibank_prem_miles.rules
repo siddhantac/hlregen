@@ -2,15 +2,15 @@
 # cf http://hledger.org/manual#csv-files
 
 include categories.rules
-fields date, description, amount-in, amount-out, ,account,comment,description2
-date-format %-d/%-m/%Y
+skip 1
+fields ,date, description,amount-in,amount-out,account,comment,code,balance
+date-format %Y-%m-%d
 currency SGD$
 decimal-mark .
 
 if FAST INCOMING PAYMENT
   account2 assets:credit_card_payment
 
-amount %amount
 account1 liabilities:credit_card:citibank_prem_miles
 description %description2 %description
 include overrides.rules

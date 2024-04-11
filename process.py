@@ -18,6 +18,7 @@ import subprocess
 import os
 import sys
 import argparse
+import csv
 
 parser = argparse.ArgumentParser(description='process journals')
 parser.add_argument('--date', '-d', type=str, help='date')
@@ -65,17 +66,14 @@ class Transaction:
 def txns_from_csv(command):
     csv_file = subprocess.run(command, capture_output=True, text=True)
     lines = csv_file.stdout.split('\n')
-
-    header = lines[0]
+    reader = csv.reader(lines[1:])
     txns = []
-    for l in lines[1:]:
-        if len(l) == 0:
+    for row in reader:
+        if row is None or len(row) == 0:
             continue
-        cols = l.split(',')
-        txn = Transaction(cols)
+        txn = Transaction(row)
         txns.append(txn)
-
-    return header, txns
+    return lines[0], txns
 
 # 1 journal to csv
 # 2 parse csv and load into memory
@@ -87,7 +85,7 @@ tmp_csv_filename = os.path.join('tmp_' +csvfile_dirname, csvfile)
 with open(tmp_csv_filename,'w', newline='') as f:
     f.write("txn_id,date,description,credit,debit,account,comment,code\n")
     for txn in filtered_txns:
-        f.write(f"{txn.txn_id},{txn.date},{txn.description},{txn.credit},{txn.debit},,{txn.comment},{txn.code}\n")
+        f.write(f"{txn.txn_id},{txn.date},\"{txn.description}\",{txn.credit},{txn.debit},,{txn.comment},{txn.code}\n")
 
 
 # [ ] 4 import csv with hledger and create new csv
@@ -127,12 +125,12 @@ if not is_credit_card:
     balance = balance_str.replace("SGD$", "")
 
 with open(csv_filename,'w', newline='') as f:
-    f.write(header+"\n")
+    f.write("txn_id,date,description,credit,debit,account,comment,code\n")
     for idx, t in enumerate(filtered_txns):
         if not t.keep_account:
-            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},,{t.comment},{t.code}")
+            f.write(f"{t.txn_id},{t.date},\"{t.description}\",{t.credit},{t.debit},,{t.comment},{t.code}")
         else:
-            f.write(f"{t.txn_id},{t.date},{t.description},{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
+            f.write(f"{t.txn_id},{t.date},\"{t.description}\",{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
 
         if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
