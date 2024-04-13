@@ -132,27 +132,33 @@ if
   account2 expenses:utilities
 
 if
-%description NETFLIX
-%description Disney Plus
-%description YOUTUBE
 %description OBSIDIAN
 %description OBSIDIAN.MD
-%description READWISE
 %description DAYLIO
+%description RAYCAST
+%description FLO HEALTH
+%description APPLE.\*ITUNES
+%description APPLE.COM/BILL
+%description Google Storage
+%description 1PASSWORD
+  account2 expenses:app_subscription:tools
+
+if
+%description READWISE
 %description NEW YORK TIMES
 %description NYTIMES
 %description BLINKIST
 %description MEDIUM
-%description RAYCAST
 %description SHORTFORM
-%description FLO HEALTH
-%description APPLE.\*ITUNES
-%description APPLE.COM/BILL
-%description Patreon
-%description Google Storage
-%description 1PASSWORD
 %description JUGGERNAUT
- account2 expenses:app_subscription
+  account2 expenses:app_subscription:reading
+
+if
+%description NETFLIX
+%description Disney Plus
+%description YOUTUBE
+%description Patreon
+  account2 expenses:app_subscription:media
 
 if
 %description PLAYSTATION
