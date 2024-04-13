@@ -1,2 +1,2 @@
-tmp_csvfiles/
+*.csv
 *.journal

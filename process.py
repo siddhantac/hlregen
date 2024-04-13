@@ -35,7 +35,7 @@ date = args.date
 account_name = account.split(":")[2]
 base_filename = date.replace("/", "") + "_" + account_name
 journal_filename = date.replace("/", "") + "_" + account_name + ".journal"
-csvfile_dirname = 'csvfiles/'
+csvfile_dirname = '../regen_csvfiles/'
 csvfile = base_filename + '.csv'
 csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
@@ -81,7 +81,7 @@ header, all_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O"
 filtered_txns = [t for t in all_txns if account not in t.account]
 
 # 3 re-create csv without accounts
-tmp_csv_filename = os.path.join('tmp_' +csvfile_dirname, csvfile)
+tmp_csv_filename = os.path.join('tmp_csvfiles', csvfile)
 with open(tmp_csv_filename,'w', newline='') as f:
     f.write("txn_id,date,description,credit,debit,account,comment,code\n")
     for txn in filtered_txns:

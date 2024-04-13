@@ -1,6 +1,0 @@
-"txnidx","date","date2","status","code","description","comment","account","amount","commodity","credit","debit","posting-status","posting-comment"
-"4231","2023-02-01","India expenses","","768.62","expenses:household:india","",""
-"4231","2023-02-01","India expenses","800.00","","assets:transfers","",""
-"4232","2023-02-03","Paylah","","10.50","expenses:dine_out","",""
-"4233","2023-02-04","Paylah","","5.90","expenses:dine_out","",""
-"4234","2023-02-28","Interest","0.35","",,"","","9063.82"
