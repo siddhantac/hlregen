@@ -3,7 +3,7 @@
 
 include categories.rules
 skip 1
-fields ,date, description,amount-in,amount-out,account,comment,code,balance
+fields date, description,amount-in,amount-out,account,comment,code,balance
 date-format %Y-%m-%d
 currency SGD$
 decimal-mark .

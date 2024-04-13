@@ -83,9 +83,9 @@ filtered_txns = [t for t in all_txns if account not in t.account]
 # 3 re-create csv without accounts
 tmp_csv_filename = os.path.join('tmp_csvfiles', csvfile)
 with open(tmp_csv_filename,'w', newline='') as f:
-    f.write("txn_id,date,description,credit,debit,account,comment,code\n")
+    f.write("date,description,credit,debit,account,comment,code\n")
     for txn in filtered_txns:
-        f.write(f"{txn.txn_id},{txn.date},\"{txn.description}\",{txn.credit},{txn.debit},,{txn.comment},{txn.code}\n")
+        f.write(f"{txn.date},\"{txn.description}\",{txn.credit},{txn.debit},,{txn.comment},{txn.code}\n")
 
 
 # [ ] 4 import csv with hledger and create new csv
@@ -125,12 +125,12 @@ if not is_credit_card:
     balance = balance_str.replace("SGD$", "")
 
 with open(csv_filename,'w', newline='') as f:
-    f.write("txn_id,date,description,credit,debit,account,comment,code\n")
+    f.write("date,description,credit,debit,account,comment,code\n")
     for idx, t in enumerate(filtered_txns):
         if not t.keep_account:
-            f.write(f"{t.txn_id},{t.date},\"{t.description}\",{t.credit},{t.debit},,{t.comment},{t.code}")
+            f.write(f"{t.date},\"{t.description}\",{t.credit},{t.debit},,{t.comment},{t.code}")
         else:
-            f.write(f"{t.txn_id},{t.date},\"{t.description}\",{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
+            f.write(f"{t.date},\"{t.description}\",{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
 
         if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
