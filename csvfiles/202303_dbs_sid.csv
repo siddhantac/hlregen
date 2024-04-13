@@ -1,0 +1,8 @@
+"txnidx","date","date2","status","code","description","comment","account","amount","commodity","credit","debit","posting-status","posting-comment"
+"4361","2023-03-02","India expenses","800.00","","assets:transfers","",""
+"4361","2023-03-02","India expenses","","780.26","expenses:household:india","",""
+"4362","2023-03-13","Sold SecretLab chair","220.00","","income:others","",""
+"4363","2023-03-17","ATM Withdrawal","","20.00","expenses:petty_cash","",""
+"4364","2023-03-20","28 Hong Kong street (bar)","","75.15","expenses:dine_out","",""
+"4365","2023-03-28","ATM Withdrawal","","40.00","expenses:petty_cash","",""
+"4366","2023-03-31","Interest","0.39","",,"","","9168.80"

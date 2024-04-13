@@ -1,0 +1,8 @@
+"txnidx","date","date2","status","code","description","comment","account","amount","commodity","credit","debit","posting-status","posting-comment"
+"4110","2023-01-03","Rent","","3000.00","expenses:rent","",""
+"4111","2023-01-03","Mobile top up","","10.00","expenses:utilities","",""
+"4112","2023-01-20","PayNow to Sasha","","2040.00","expenses:fitness","",""
+"4113","2023-01-23","Mr Bean","","1.70","expenses:dine_out","paylah",""
+"4114","2023-01-29","Blackjack with money","","2.00","expenses:entertainment","paid to Eddie",""
+"4115","2023-01-30","Paylah","","4.00","expenses:dine_out","",""
+"4116","2023-01-31","Interest","4.03","",,"","","91966.48"
