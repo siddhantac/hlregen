@@ -92,6 +92,7 @@ if
 %description RAZ\*Swiggy
 %description Swiggy Foods
 %description BUNDLTECHNOLOGIES
+%description ALCHEMIST 
   account2 expenses:dine_out
 
 if
@@ -113,7 +114,6 @@ if
 %description AMZNPRIMESG MEMBERSHIP
 %description PERK COFFEE
 %description FREDO
-%description ALCHEMIST 
 %description HYPER VIVO
 %description Grindelwald
 %description RedManShop
