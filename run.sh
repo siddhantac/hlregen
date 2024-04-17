@@ -2,7 +2,13 @@
 
 # dates=( "2023/01" "2023/02" "2023/03" "2023/04" )
 dates=( "2023/01" )
-accounts=( "assets:bank:dbs_sid" "assets:bank:dbs_twisha" "assets:bank:ocbc_sid" "liabilities:credit_card:citibank_prem_miles" )
+accounts=( \
+    "assets:bank:dbs_sid" \
+    "assets:bank:dbs_twisha" \
+    "assets:bank:ocbc_sid" \
+    "liabilities:credit_card:citibank_prem_miles" \
+    "liabilities:credit_card:amex" \
+)
 
 CONTINUE=1
 for date in "${dates[@]}"
