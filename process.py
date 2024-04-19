@@ -39,6 +39,7 @@ csvfile_dirname = '../../accounts/csv_regen/cleaned/'
 csvfile = base_filename + '.csv'
 csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
+posting_date = date.replace("/", "-") + "-14"
 
 print("Processing: ", journal_filename)
 
@@ -134,6 +135,8 @@ with open(csv_filename,'w', newline='') as f:
 
         if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
+        if is_credit_card:
+            f.write(f",{posting_date}")
 
         f.write("\n")
 
@@ -169,3 +172,4 @@ for idx, t in enumerate(original_txns):
         print("new: ", new_txns[idx])
 
 print("completed")
+print("new file -> ", csv_filename)
