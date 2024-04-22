@@ -1,7 +1,16 @@
 #!/bin/sh
 
 # dates=( "2023/01" "2023/02" "2023/03" "2023/04" )
-dates=( "2023/01" )
+# dates=( "2024/02" )
+
+dates=
+if [ -z "$1" ]; then
+    echo "date is required"
+    exit 1
+fi
+
+dates=( $1 )
+
 accounts=( \
     "assets:bank:dbs_sid" \
     "assets:bank:dbs_twisha" \
