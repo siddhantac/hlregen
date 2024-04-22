@@ -40,6 +40,7 @@ csvfile = base_filename + '.csv'
 csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
 posting_date = date.replace("/", "-") + "-14"
+journal_filepath = os.path.join("../../accounts/journals", journal_filename)
 
 print("Processing: ", journal_filename)
 
@@ -78,7 +79,11 @@ def txns_from_csv(command):
 
 # 1 journal to csv
 # 2 parse csv and load into memory
-header, all_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
+read_from_journal_cmd = ["hledger", "print", account,  "-p", date, "-O", "csv"]
+if os.path.isfile(journal_filepath):
+    read_from_journal_cmd = ["hledger", "print", account, "-f", journal_filepath, "-O", "csv"]
+    print("used existing journal file")
+header, all_txns = txns_from_csv(read_from_journal_cmd)
 filtered_txns = [t for t in all_txns if account not in t.account]
 
 # 3 re-create csv without accounts
@@ -145,7 +150,6 @@ with open(csv_filename,'w', newline='') as f:
 new_journal_cmd = subprocess.run(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file], capture_output=True, text=True)
 new_journal = new_journal_cmd.stdout
 
-journal_filepath = os.path.join("../../accounts/journals", journal_filename)
 with open(journal_filepath, "r") as f:
     original_journal = f.read()
     if new_journal != original_journal:
@@ -157,7 +161,16 @@ with open(journal_filepath, "r") as f:
             print("wrote new journal to: ", new_journal_file)
             print("vimdiff ", journal_filepath, new_journal_file)
 
-_, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
+original_txns = []
+original_csvfile = os.path.join("../../accounts/csv/cleaned/", csvfile)
+print(original_csvfile)
+if os.path.isfile(original_csvfile):
+    original_rules_file = os.path.join("../../accounts/rules", account_name + ".rules")
+    _, original_txns = txns_from_csv(["hledger", "print", "-f", original_csvfile, "--rules-file", original_rules_file, "-O", "csv"])
+else:
+    _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
+    print("using hledger command", len(original_csvfile))
+
 _, new_txns = txns_from_csv(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file, "-O", "csv"])
 
 if len(original_txns) != len(new_txns):
