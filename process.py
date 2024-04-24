@@ -19,6 +19,7 @@ import os
 import sys
 import argparse
 import csv
+import datetime
 
 parser = argparse.ArgumentParser(description='process journals')
 parser.add_argument('--date', '-d', type=str, help='date')
@@ -39,8 +40,12 @@ csvfile_dirname = '../../accounts/csv_regen/cleaned/'
 csvfile = base_filename + '.csv'
 csv_filename = os.path.join(csvfile_dirname, csvfile) 
 rules_file = os.path.join("rules", account_name + ".rules")
-posting_date = date.replace("/", "-") + "-14"
 journal_filepath = os.path.join("../../accounts/journals", journal_filename)
+
+posting_date = datetime.datetime.strptime(date.replace("/", "-") + "-14", "%Y-%m-%d")
+posting_date_comment = "date:"+posting_date.strftime("%Y-%m-%d")
+posting_date_prev = posting_date - datetime.timedelta(days=31)
+posting_date_prev_comment = "date:"+posting_date_prev.strftime("%Y-%m-%d")
 
 print("Processing: ", journal_filename)
 
@@ -141,7 +146,7 @@ with open(csv_filename,'w', newline='') as f:
         if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
         if is_credit_card:
-            f.write(f",{posting_date}")
+            f.write(f",{posting_date_comment}")
 
         f.write("\n")
 
