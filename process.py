@@ -162,13 +162,13 @@ new_journal = new_journal_cmd.stdout
 with open(journal_filepath, "r") as f:
     original_journal = f.read()
     if new_journal != original_journal:
-        print("\njournal not equal")
+        print("\n journal not equal")
 
         new_journal_file = os.path.join("journals", journal_filename)
         with open(new_journal_file, "w") as f2:
             f2.write(new_journal)
-            print("wrote new journal to: ", new_journal_file)
-            print("vimdiff ", journal_filepath, new_journal_file)
+            print(" wrote journal\t", new_journal_file)
+            print(" vimdiff ", journal_filepath, new_journal_file)
 
 original_txns = []
 original_csvfile = os.path.join("../../accounts/csv/cleaned/", csvfile)
@@ -178,20 +178,19 @@ if os.path.isfile(original_csvfile):
     _, original_txns = txns_from_csv(["hledger", "print", "-f", original_csvfile, "--rules-file", original_rules_file, "-O", "csv"])
 else:
     _, original_txns = txns_from_csv(["hledger", "print", account,  "-p", date, "-O", "csv"])
-    print("using hledger command", len(original_csvfile))
+    print(" using hledger command\t", len(original_csvfile))
 
 _, new_txns = txns_from_csv(["hledger", "print", "-f", csv_filename, "--rules-file", rules_file, "-O", "csv"])
 
 if len(original_txns) != len(new_txns):
-    print("\nunequal no. of txns")
+    print("\n FATAL\tunequal no. of txns")
     print(len(original_txns), len(new_txns))
     sys.exit(1)
 
 for idx, t in enumerate(original_txns):
     if t != new_txns[idx]:
-        print("\nunequal txn idx: ", idx)
-        print("original:", t)
-        print("new: ", new_txns[idx])
+        print("\n unequal txn idx: ", idx)
+        print(" original:", t)
+        print(" new: ", new_txns[idx])
 
-print("completed")
-print("new file -> ", csv_filename)
+print(" new file\t", csv_filename)
