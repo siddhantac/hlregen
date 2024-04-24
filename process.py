@@ -44,7 +44,8 @@ journal_filepath = os.path.join("../../accounts/journals", journal_filename)
 
 posting_date = datetime.datetime.strptime(date.replace("/", "-") + "-14", "%Y-%m-%d")
 posting_date_comment = "date:"+posting_date.strftime("%Y-%m-%d")
-posting_date_prev = posting_date - datetime.timedelta(days=31)
+posting_date_prev = posting_date - datetime.timedelta(days=30)
+posting_date_prev = posting_date_prev.replace(day=14)
 posting_date_prev_comment = "date:"+posting_date_prev.strftime("%Y-%m-%d")
 
 print(" processing\t", journal_filename)
