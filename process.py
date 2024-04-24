@@ -87,7 +87,7 @@ def txns_from_csv(command):
 read_from_journal_cmd = ["hledger", "print", account,  "-p", date, "-O", "csv"]
 if os.path.isfile(journal_filepath):
     read_from_journal_cmd = ["hledger", "print", account, "-f", journal_filepath, "-O", "csv"]
-    print(" load data\tused existing journal file")
+    print(" load data \tused existing journal file")
 header, all_txns = txns_from_csv(read_from_journal_cmd)
 filtered_txns = [t for t in all_txns if account not in t.account]
 
@@ -146,7 +146,10 @@ with open(csv_filename,'w', newline='') as f:
         if not is_credit_card and idx == len(filtered_txns) - 1:
             f.write(f",{balance}")
         if is_credit_card:
-            f.write(f",{posting_date_comment}")
+            if t.description == "PAYMENT BY TELEPHONE/INTERNET BANKING" or t.description == "FAST INCOMING PAYMENT":
+                f.write(f",{posting_date_prev_comment}")
+            else:
+                f.write(f",{posting_date_comment}")
 
         f.write("\n")
 
