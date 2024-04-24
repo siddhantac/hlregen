@@ -47,7 +47,7 @@ posting_date_comment = "date:"+posting_date.strftime("%Y-%m-%d")
 posting_date_prev = posting_date - datetime.timedelta(days=31)
 posting_date_prev_comment = "date:"+posting_date_prev.strftime("%Y-%m-%d")
 
-print("Processing: ", journal_filename)
+print(" processing\t", journal_filename)
 
 class Transaction:
     def __init__(self, cols):
@@ -87,7 +87,7 @@ def txns_from_csv(command):
 read_from_journal_cmd = ["hledger", "print", account,  "-p", date, "-O", "csv"]
 if os.path.isfile(journal_filepath):
     read_from_journal_cmd = ["hledger", "print", account, "-f", journal_filepath, "-O", "csv"]
-    print("used existing journal file")
+    print(" load data\tused existing journal file")
 header, all_txns = txns_from_csv(read_from_journal_cmd)
 filtered_txns = [t for t in all_txns if account not in t.account]
 
@@ -121,7 +121,7 @@ for ut in unknown_txns:
     idx = find_txn_idx(ut, filtered_txns)
     if idx != -1:
         filtered_txns[idx].keep_account = True
-        print("unknowns found:", filtered_txns[idx])
+        print(" unknowns\t", filtered_txns[idx])
 
 # balance
 is_credit_card = False
