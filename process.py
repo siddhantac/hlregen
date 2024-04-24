@@ -71,6 +71,9 @@ class Transaction:
     def __eq__(self, other):
         return self.description == other.description and self.credit == other.credit and self.debit == other.debit and self.account == other.account and self.comment == self.comment and self.code == self.code
 
+    def __lt__(self, other):
+        return self.date < other.date
+
 def txns_from_csv(command):
     csv_file = subprocess.run(command, capture_output=True, text=True)
     lines = csv_file.stdout.split('\n')
@@ -91,6 +94,7 @@ if os.path.isfile(journal_filepath):
     print(" load data \tused existing journal file")
 header, all_txns = txns_from_csv(read_from_journal_cmd)
 filtered_txns = [t for t in all_txns if account not in t.account]
+filtered_txns=sorted(filtered_txns, reverse=True) # arrange in reverse chronological order
 
 # 3 re-create csv without accounts
 tmp_csv_filename = os.path.join('tmp_csvfiles', csvfile)
