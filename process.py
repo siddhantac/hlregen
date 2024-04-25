@@ -148,7 +148,7 @@ with open(csv_filename,'w', newline='') as f:
         else:
             f.write(f"{t.date},\"{t.description}\",{t.credit},{t.debit},{t.account},{t.comment},{t.code}")
 
-        if not is_credit_card and idx == len(filtered_txns) - 1:
+        if not is_credit_card and idx == 0:
             f.write(f",{balance}")
         if is_credit_card:
             if t.description == "PAYMENT BY TELEPHONE/INTERNET BANKING" or t.description == "FAST INCOMING PAYMENT":
