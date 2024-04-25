@@ -90,7 +90,7 @@ def txns_from_csv(command):
 # 2 parse csv and load into memory
 read_from_journal_cmd = ["hledger", "print", account,  "-p", date, "-O", "csv"]
 if os.path.isfile(journal_filepath):
-    read_from_journal_cmd = ["hledger", "print", account, "-f", journal_filepath, "-O", "csv"]
+    read_from_journal_cmd = ["hledger", "print", account, "-f", journal_filepath, "-I", "-O", "csv"]
     print(" load data \tused existing journal file")
 header, all_txns = txns_from_csv(read_from_journal_cmd)
 filtered_txns = [t for t in all_txns if account not in t.account]
