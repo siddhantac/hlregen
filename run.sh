@@ -22,16 +22,15 @@ accounts=( \
 CONTINUE=1
 for date in "${dates[@]}"
 do
-    # if [ $CONTINUE -eq 0 ]; then
-    #     exit 0
-    # fi
-
     for acc in "${accounts[@]}"
     do
+        if [ $CONTINUE -eq 0 ]; then
+            exit 0
+        fi
+
         echo ""
         echo "---"
-        # ./process.py --account "assets:bank:dbs_twisha" --date "$date"
         ./process.py --account "$acc" --date "$date"
-        # gum confirm "Continue?" && CONTINUE=1 || CONTINUE=0
+        gum confirm "Continue?" && CONTINUE=1 || CONTINUE=0
     done
 done
