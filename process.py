@@ -118,6 +118,8 @@ def find_txn_idx(txn, txns):
     uid = txn_uniq_id(txn)
     for idx, t in enumerate(txns):
         if uid == txn_uniq_id(t):
+            if t.keep_account: # already processed, likely there are 2 identical txns, so skip this to find the next
+                continue
             return idx 
     return -1
 
