@@ -55,7 +55,7 @@ class Transaction:
         self.txn_id = cols[0]
         self.date = cols[1]
         self.code = cols[4]
-        self.description = cols[5]
+        self.description = cols[5].translate(str.maketrans({'"': "'"}))
         self.comment = cols[6]
         self.account = cols[7]
         self.credit = cols[10]
